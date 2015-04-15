@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="divider_color">#FFCCCCCC</color>
+    <color name="headlayout_color">#019fde</color>
+    <color name="translucent">#00000000</color>
+    <color name="bg_color">#f5f6f7</color><!-- 背景色 -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="yellow">#ffff00</color>
+    <color name="red1">#DC143C</color>
+    <color name="blue">#333333</color>
+
+</resources>
