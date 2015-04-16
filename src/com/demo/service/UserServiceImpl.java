@@ -32,21 +32,10 @@ public class UserServiceImpl implements UserService {
 			throws Exception {
 
 		try {
-			if (null == connection || !connection.isAuthenticated()) {
-				XMPPConnection.DEBUG_ENABLED = true;
-
-				ConnectionConfiguration config = new ConnectionConfiguration(
-						SERVER_HOST, SERVER_PORT, SERVER_NAME);
-				config.setReconnectionAllowed(true);
-				config.setSendPresence(true);
-				config.setSASLAuthenticationEnabled(true);
-				connection = new XMPPConnection(config);
-				connection.connect();
-				connection.login(username, password);
-				// 配置各种Provider，如果不配置，则会无法解析数据
-				// configureConnection(ProviderManager.getInstance());
-				return connection;
-			}
+			connection = GetConnection();
+			connection.login(username, password);
+			
+			return connection;
 		} catch (XMPPException xe) {
 			Log.e("XMPPChatDemoActivity", "Failed to log in as " + username);
 			Log.e("XMPPChatDemoActivity", xe.toString());
@@ -82,17 +71,19 @@ public class UserServiceImpl implements UserService {
 
 		Registration reg = new Registration();
 		reg.setType(IQ.Type.SET);
-		if (null == connection || !connection.isAuthenticated()) {
-			XMPPConnection.DEBUG_ENABLED = true;
-
-			ConnectionConfiguration config = new ConnectionConfiguration(
-					SERVER_HOST, SERVER_PORT, SERVER_NAME);
-			config.setReconnectionAllowed(true);
-			config.setSendPresence(true);
-			config.setSASLAuthenticationEnabled(true);
-			connection = new XMPPConnection(config);
-			connection.connect();
-		}
+//		if (null == connection || !connection.isAuthenticated()) {
+//			XMPPConnection.DEBUG_ENABLED = true;
+//
+//			ConnectionConfiguration config = new ConnectionConfiguration(
+//					SERVER_HOST, SERVER_PORT, SERVER_NAME);
+//			config.setReconnectionAllowed(true);
+//			config.setSendPresence(true);
+//			config.setSASLAuthenticationEnabled(true);
+//			connection = new XMPPConnection(config);
+//			connection.connect();
+//		}
+		connection = GetConnection();
+		
 		reg.setTo(connection.getServiceName());
 		reg.setUsername(username);
 		reg.setPassword(password);
@@ -125,6 +116,26 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+	public XMPPConnection GetConnection(){
+		try {
+			if (null == connection || !connection.isAuthenticated()) {
+				XMPPConnection.DEBUG_ENABLED = true;
+
+				ConnectionConfiguration config = new ConnectionConfiguration(
+						SERVER_HOST, SERVER_PORT, SERVER_NAME);
+				config.setReconnectionAllowed(true);
+				config.setSendPresence(true);
+				config.setSASLAuthenticationEnabled(true);
+				connection = new XMPPConnection(config);
+				connection.connect();
+
+				return connection;
+			}
+		} catch (XMPPException xe) {
+			Log.e("XMPPChatDemoActivity", xe.toString());
+		}
+		return null;
+	}
 	/** check validate of username & email */
 	private boolean validteUsername(String username) {
 		String strUser = "^[a-zA-Z]|[0-9]|[a-zA-Z0-9]|[a-zA-Z0-9_]{5,20}";

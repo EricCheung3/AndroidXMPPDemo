@@ -7,7 +7,6 @@ import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.RosterEntry;
-import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.filter.MessageTypeFilter;
@@ -32,8 +31,8 @@ public class XMPPChatDemoActivity extends Activity {
 
 	public static final String HOST = "129.128.184.46";
 	public static final int PORT = 5220;
-	public static final String SERVICE = "gmail.com";
-	public static final String USERNAME = "user1";
+	public static final String SERVICE = "myria";
+	public static final String USERNAME = "user11";
 	public static final String PASSWORD = "123456";
 
 	private XMPPConnection connection;

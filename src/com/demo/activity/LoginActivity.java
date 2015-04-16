@@ -2,10 +2,10 @@ package com.demo.activity;
 
 
 import java.lang.ref.WeakReference;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import org.jivesoftware.smack.Roster;
-import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.packet.Presence;
 
@@ -158,6 +158,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	}
 
 	// LoginThread
+	List<Map<String,String>> listMap = new ArrayList<Map<String,String>>();
 	private class LoginThread implements Runnable {
 		@Override
 		public void run() {
@@ -189,16 +190,41 @@ public class LoginActivity extends Activity implements OnClickListener {
 				// Set the status to available
 				Presence presence = new Presence(Presence.Type.available);
 				connection.sendPacket(presence);
-				
+/*				
 				Roster roster = connection.getRoster();
-				Collection<RosterEntry> entries = roster.getEntries();
-				for (RosterEntry entry : entries) {
-					Log.i("RosterEntry",entry.toString());
-					Log.i("RosterEntry","User: " + entry.getUser());
+				Object[] entries = roster.getEntries().toArray();
+				for (Object entry : entries) {
+					Map<String,String> map = new HashMap<String,String>();
+					
+					String[] s = entry.toString().split(" ");
+					Log.i("s[0]", s[0]);
+					Log.i("s[1]", s[1]);
+					if(s.length==2){
+						map.put("name", s[0]);
+						map.put("username", s[1]);
+					}else if(s.length==3){
+						map.put("name", s[0]);
+						map.put("username", s[1]);
+						map.put("group", s[2]);
+					}
+					listMap.add(map);
 				}
-				
+				System.out.println(listMap.toString());
+*/
+//				Collection<RosterEntry> entries = roster.getEntries();
+//				for (RosterEntry entry : entries) {
+//					Log.i("RosterEntry",
+//							"------"+entry.toString()+"----");
+//					//user4: user4@myria [myFriends]
+//					Log.i("RosterEntry","getUser: " + entry.getUser());//user4@myria
+//					Log.i("RosterEntry","getGroups: " + entry.getGroups().toString());
+//					Log.i("RosterEntry","getName: " + entry.getName());//user4
+//				}
+				Log.i("connection","getUser: " + connection.getUser());//user2@myria/Smack
+
 				Intent intent = new Intent();
 				intent.putExtra("username", username);
+				intent.putExtra("password", password);
 				intent.setClass(LoginActivity.this, MainActivity.class);
 				startActivity(intent);
 				LoginActivity.this.finish();

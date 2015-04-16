@@ -8,4 +8,5 @@ public interface UserService {
 	
 	public XMPPConnection userRegister(String username,String name, String email, String password,String confirmPasswd) throws Exception;
 
+	public XMPPConnection GetConnection();
 }

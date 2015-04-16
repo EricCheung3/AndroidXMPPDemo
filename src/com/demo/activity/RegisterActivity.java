@@ -4,8 +4,6 @@ package com.demo.activity;
 import java.lang.ref.WeakReference;
 
 import org.jivesoftware.smack.XMPPConnection;
-import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.packet.Presence;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -143,19 +141,7 @@ public class RegisterActivity extends Activity {
 				startActivity(intent);
 				intent = null;
 				RegisterActivity.this.finish();
-//				
-//				try {
-//					connection.login(username, password);
-//					Presence presence = new Presence(Presence.Type.available);
-//					connection.sendPacket(presence);
-//					handler.sendEmptyMessage(REGISTER_SUCCESS);
-//					Intent intent = new Intent();
-//					intent.putExtra("username", username);
-//					intent.setClass(RegisterActivity.this, FriendListActivity.class);
-//					startActivity(intent);
-//				} catch (XMPPException e) {
-//					e.printStackTrace();
-//				}
+
 			}else{
 				try {
 					throw new ServiceException(REGISTER_FAILED);
