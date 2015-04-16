@@ -1,11 +1,14 @@
 package com.demo.activity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.PacketListener;
+import org.jivesoftware.smack.Roster;
+import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.filter.MessageTypeFilter;
@@ -29,6 +32,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.demo.adapter.FriendsAdapter;
 import com.demo.service.UserServiceImpl;
@@ -40,7 +44,7 @@ public class MainActivity extends Activity {
 	private ArrayList<String> messages = new ArrayList<String>();
 	private Handler mHandler = new Handler();
 	private ListView listview;
-	private Button btn_OK_PLAY;
+	private Button btn_Send;
 	private Button btn_Cancel;
 	private ListView friendlistView;
 	private PopupWindow popFriends;
@@ -48,6 +52,8 @@ public class MainActivity extends Activity {
 	private FriendsAdapter friendsAdapter;
 	private List<Map<String, String>> listMap;
 	private ArrayList<String> selectedListMap = new ArrayList<String>();
+
+	private String streaminglink = "http://129.128.184.46:8554/live.sdp";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,17 @@ public class MainActivity extends Activity {
 		// get message listener
 		setListenerConnection(connection);
 
+		/**
+		// test add user as your friends
+		Roster roster = connection.getRoster();		
+		if(addUsers(roster, "test1@myria", "test1")){
+			Collection<RosterEntry> entries = roster.getEntries();
+			for (RosterEntry entry : entries) {
+				Log.i("RosterEntry","------"+entry.toString()+"----");
+				//user4: user4@myria [myFriends]
+			}
+		}
+		*/
 	}
 
 	// Select contact function
@@ -116,26 +133,31 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		btn_OK_PLAY = (Button) v.findViewById(R.id.btn_play);
-		btn_OK_PLAY.setOnClickListener(new View.OnClickListener() {
+		btn_Send = (Button) v.findViewById(R.id.btn_play);
+		btn_Send.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				String to = "user11@myria";
-				String text = "http://129.128.184.46:8554/live.sdp";
 
 				System.out.println(selectedListMap.size());
 				for (int i = 0; i < selectedListMap.size(); i++) {
-					Log.i("XMPPChatDemoActivity", "Sending text " + text
-							+ " to " + selectedListMap.get(i));
+					Log.i("XMPPChatDemoActivity", "Sending text "
+							+ streaminglink + " to " + selectedListMap.get(i));
 					Message msg = new Message(selectedListMap.get(i),
 							Message.Type.chat);
-					msg.setBody(text);
+					msg.setBody(streaminglink);
 					if (connection != null) {
 						connection.sendPacket(msg);
 						messages.add(connection.getUser() + ":");
-						messages.add(text);
+						messages.add(streaminglink);
 						popFriends.dismiss();
 					}
 				}
+			}
+		});
+		Button btn_send_cancel = (Button) v.findViewById(R.id.btn_send_cancel);
+		btn_send_cancel.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+
+				popFriends.dismiss();
 			}
 		});
 	}
@@ -165,6 +187,7 @@ public class MainActivity extends Activity {
 	}
 
 	public void setListenerConnection(XMPPConnection connection) {
+
 		this.connection = connection;
 		if (connection != null) {
 			// Add a packet listener to get messages sent to us
@@ -174,17 +197,26 @@ public class MainActivity extends Activity {
 				public void processPacket(Packet packet) {
 					Message message = (Message) packet;
 					if (message.getBody() != null) {
-						String fromName = StringUtils.parseBareAddress(message
-								.getFrom());
+						final String[] fromName = StringUtils.parseBareAddress(
+								message.getFrom()).split("@");
 						Log.i("XMPPChatDemoActivity", "Text Recieved "
-								+ message.getBody() + " from " + fromName);
-						messages.add(fromName + ":");
+								+ message.getBody() + " from " + fromName[0]);
+						messages.add(fromName[0] + ":");
 						messages.add(message.getBody());
 						final String msg = message.getBody().toString();
 						// Add the incoming message to the list view
+
 						mHandler.post(new Runnable() {
 							public void run() {
-								popupReceiveStreamingLinkMessage(msg);
+								// notification or chat...
+								if (msg.equals(streaminglink))
+									popupReceiveStreamingLinkMessage(msg);
+								else {
+									// display message like chatting
+									Toast.makeText(getApplicationContext(),
+											fromName[0] + ": " + msg,
+											Toast.LENGTH_LONG).show();
+								}
 							}
 						});
 					}
@@ -201,7 +233,7 @@ public class MainActivity extends Activity {
 		int h = getWindowManager().getDefaultDisplay().getHeight();
 		int w = getWindowManager().getDefaultDisplay().getWidth();
 
-		popStreamingLink = new PopupWindow(v, w - 10, (int) (((2.8) * h) / 4));
+		popStreamingLink = new PopupWindow(v, w - 10, h / 4);
 		popStreamingLink.setAnimationStyle(R.style.MyDialogStyleBottom);
 		popStreamingLink.setFocusable(true);
 		popStreamingLink.setBackgroundDrawable(new BitmapDrawable());
@@ -215,8 +247,15 @@ public class MainActivity extends Activity {
 
 		TextView stramingLink = (TextView) v.findViewById(R.id.streaming_link);
 		stramingLink.setText(message);
-		btn_OK_PLAY = (Button) v.findViewById(R.id.btn_play_streaming);
-		btn_OK_PLAY.setOnClickListener(new View.OnClickListener() {
+		btn_Send = (Button) v.findViewById(R.id.btn_play_streaming);
+		btn_Send.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				// DO PLAYING
+				popStreamingLink.dismiss();
+			}
+		});
+		Button btn_cancel = (Button) v.findViewById(R.id.btn_cancle);
+		btn_cancel.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				popStreamingLink.dismiss();
 			}
@@ -232,5 +271,17 @@ public class MainActivity extends Activity {
 		} catch (Exception e) {
 
 		}
+	}
+
+	// Add user
+	public static boolean addUsers(Roster roster, String userName, String name) {
+		try {
+			roster.createEntry(userName, name, null/*roster.getGroup(groupName)*/);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 }
