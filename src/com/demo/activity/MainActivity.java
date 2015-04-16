@@ -44,8 +44,10 @@ public class MainActivity extends Activity {
 	private Button btn_Cancel;
 	private ListView friendlistView;
 	private PopupWindow popFriends;
+	private PopupWindow popStreamingLink;
 	private FriendsAdapter friendsAdapter;
 	private List<Map<String, String>> listMap;
+	private ArrayList<String> selectedListMap = new ArrayList<String>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,6 @@ public class MainActivity extends Activity {
 	}
 
 	// Select contact function
-	ArrayList<String> selectedListMap = new ArrayList<String>();
 
 	private void popupContactList(String username, String password) {
 
@@ -125,7 +126,8 @@ public class MainActivity extends Activity {
 				for (int i = 0; i < selectedListMap.size(); i++) {
 					Log.i("XMPPChatDemoActivity", "Sending text " + text
 							+ " to " + selectedListMap.get(i));
-					Message msg = new Message(selectedListMap.get(i), Message.Type.chat);
+					Message msg = new Message(selectedListMap.get(i),
+							Message.Type.chat);
 					msg.setBody(text);
 					if (connection != null) {
 						connection.sendPacket(msg);
@@ -178,16 +180,47 @@ public class MainActivity extends Activity {
 								+ message.getBody() + " from " + fromName);
 						messages.add(fromName + ":");
 						messages.add(message.getBody());
+						final String msg = message.getBody().toString();
 						// Add the incoming message to the list view
-						// mHandler.post(new Runnable() {
-						// public void run() {
-						// setListAdapter();
-						// }
-						// });
+						mHandler.post(new Runnable() {
+							public void run() {
+								popupReceiveStreamingLinkMessage(msg);
+							}
+						});
 					}
 				}
 			}, filter);
 		}
+	}
+
+	private void popupReceiveStreamingLinkMessage(String message) {
+
+		final View v = getLayoutInflater().inflate(R.layout.streaminglink,
+				null, false);
+
+		int h = getWindowManager().getDefaultDisplay().getHeight();
+		int w = getWindowManager().getDefaultDisplay().getWidth();
+
+		popStreamingLink = new PopupWindow(v, w - 10, (int) (((2.8) * h) / 4));
+		popStreamingLink.setAnimationStyle(R.style.MyDialogStyleBottom);
+		popStreamingLink.setFocusable(true);
+		popStreamingLink.setBackgroundDrawable(new BitmapDrawable());
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				popStreamingLink.showAtLocation(v, Gravity.BOTTOM, 0, 0);
+			}
+		}, 100L);
+
+		TextView stramingLink = (TextView) v.findViewById(R.id.streaming_link);
+		stramingLink.setText(message);
+		btn_OK_PLAY = (Button) v.findViewById(R.id.btn_play_streaming);
+		btn_OK_PLAY.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				popStreamingLink.dismiss();
+			}
+		});
 	}
 
 	@Override

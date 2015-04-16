@@ -41,8 +41,10 @@ public final class R {
         public static final int top_back_left=0x7f02000a;
     }
     public static final class id {
+        public static final int btn_cancle=0x7f08001c;
         public static final int btn_login=0x7f08000b;
         public static final int btn_play=0x7f080004;
+        public static final int btn_play_streaming=0x7f08001b;
         public static final int btn_register=0x7f08000d;
         public static final int btn_reset=0x7f080019;
         public static final int cb_savepwd=0x7f08000c;
@@ -64,6 +66,7 @@ public final class R {
         public static final int registerInfo=0x7f08000e;
         public static final int relativelayout2=0x7f080008;
         public static final int sendBtn=0x7f080013;
+        public static final int streaming_link=0x7f08001a;
         public static final int text1=0x7f080005;
         public static final int textView2=0x7f080015;
         public static final int toET=0x7f08000f;
@@ -75,6 +78,7 @@ public final class R {
         public static final int login=0x7f030003;
         public static final int main=0x7f030004;
         public static final int register=0x7f030005;
+        public static final int streaminglink=0x7f030006;
     }
     public static final class string {
         public static final int app_name=0x7f060001;
