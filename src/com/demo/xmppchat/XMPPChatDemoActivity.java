@@ -50,7 +50,7 @@ public class XMPPChatDemoActivity extends Activity {
 		setContentView(R.layout.main);
 
 		recipient = (EditText) this.findViewById(R.id.toET);
-		textMessage = (EditText) this.findViewById(R.id.chatET);
+		textMessage = (EditText) this.findViewById(R.id.edit_say_something);
 		listview = (ListView) this.findViewById(R.id.listMessages);
 		setListAdapter();
 

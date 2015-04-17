@@ -38,6 +38,13 @@
         android:layout_weight="1"
         android:scrollbars="horizontal" />
 
+    <Button
+        android:id="@+id/btnCreateRoom"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="create multi-user room"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="fill_parent"
@@ -46,7 +53,7 @@
         android:orientation="horizontal" >
 
         <EditText
-            android:id="@+id/chatET"
+            android:id="@+id/edit_say_something"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
