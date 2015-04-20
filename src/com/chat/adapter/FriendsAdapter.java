@@ -1,4 +1,4 @@
-package com.demo.adapter;
+package com.chat.adapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
-import com.demo.service.UserServiceImpl;
+import com.chat.service.UserServiceImpl;
 import com.demo.xmppchat.R;
 
 public class FriendsAdapter extends BaseAdapter {

@@ -1,4 +1,4 @@
-package com.demo.activity;
+package com.chat.activity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -65,8 +65,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.demo.adapter.FriendsAdapter;
-import com.demo.service.UserServiceImpl;
+import com.chat.adapter.FriendsAdapter;
+import com.chat.service.UserServiceImpl;
 import com.demo.xmppchat.R;
 
 public class MainActivity extends Activity {
@@ -90,7 +90,7 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.main_chat);
 		// set provider manager
 		configureProviderManager(ProviderManager.getInstance());
 		
@@ -114,11 +114,11 @@ public class MainActivity extends Activity {
 				msg.setBody(text);				
 				if (connection != null) {
 					connection.sendPacket(msg);
-					messages.add(connection.getUser() + ":");
+					messages.add(connection.getUser().split("@")[0] + ":");
 					messages.add(text);
 //					setListAdapter();
 					MessageAdapter();
-					Toast.makeText(getApplicationContext(),text,Toast.LENGTH_SHORT).show();
+					//Toast.makeText(getApplicationContext(),text,Toast.LENGTH_SHORT).show();
 					
 				}
 				
@@ -230,7 +230,7 @@ public class MainActivity extends Activity {
 					msg.setBody(streaminglink);
 					if (connection != null) {
 						connection.sendPacket(msg);
-						messages.add(connection.getUser() + ":");
+						messages.add(connection.getUser().split("@")[0] + ":");
 						messages.add(streaminglink);
 						popFriends.dismiss();
 					}
@@ -298,6 +298,7 @@ public class MainActivity extends Activity {
 								}
 								else {
 									// display message like chatting
+									MessageAdapter();
 									Toast.makeText(getApplicationContext(),fromName[0] + ": " + msg,Toast.LENGTH_LONG).show();
 									
 								}

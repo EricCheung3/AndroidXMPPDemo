@@ -22,7 +22,7 @@ public final class R {
         public static final int headlayout_color=0x7f050001;
         public static final int red1=0x7f050007;
         public static final int translucent=0x7f050002;
-        /**  背景色 
+        /**  background color 
          */
         public static final int white=0x7f050004;
         public static final int yellow=0x7f050006;
@@ -78,7 +78,7 @@ public final class R {
         public static final int friendlist=0x7f030001;
         public static final int listitem=0x7f030002;
         public static final int login=0x7f030003;
-        public static final int main=0x7f030004;
+        public static final int main_chat=0x7f030004;
         public static final int register=0x7f030005;
         public static final int streaminglink=0x7f030006;
     }

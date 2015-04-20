@@ -1,4 +1,4 @@
-package com.demo.activity;
+package com.chat.activity;
 
 
 import java.lang.ref.WeakReference;
@@ -17,9 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.demo.service.ServiceException;
-import com.demo.service.UserService;
-import com.demo.service.UserServiceImpl;
+import com.chat.service.ServiceException;
+import com.chat.service.UserService;
+import com.chat.service.UserServiceImpl;
 import com.demo.xmppchat.R;
 
 public class RegisterActivity extends Activity {

@@ -1,4 +1,4 @@
-package com.demo.xmppchat;
+package com.chat.xmppchat;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,6 +15,8 @@ import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.util.StringUtils;
+
+import com.demo.xmppchat.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -47,7 +49,7 @@ public class XMPPChatDemoActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.main_chat);
 
 		recipient = (EditText) this.findViewById(R.id.toET);
 		textMessage = (EditText) this.findViewById(R.id.edit_say_something);

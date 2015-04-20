@@ -1,4 +1,4 @@
-package com.demo.service;
+package com.chat.service;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,7 +18,7 @@ import org.jivesoftware.smack.packet.Registration;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.demo.activity.RegisterActivity;
+import com.chat.activity.RegisterActivity;
 
 public class UserServiceImpl implements UserService {
 

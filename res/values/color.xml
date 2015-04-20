@@ -4,7 +4,7 @@
     <color name="divider_color">#FFCCCCCC</color>
     <color name="headlayout_color">#019fde</color>
     <color name="translucent">#00000000</color>
-    <color name="bg_color">#f5f6f7</color><!-- 背景色 -->
+    <color name="bg_color">#f5f6f7</color><!-- background color -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="yellow">#ffff00</color>

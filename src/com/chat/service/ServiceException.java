@@ -1,4 +1,4 @@
-package com.demo.service;
+package com.chat.service;
 
 public class ServiceException extends Exception{
 

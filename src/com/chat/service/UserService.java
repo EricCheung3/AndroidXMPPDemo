@@ -1,4 +1,4 @@
-package com.demo.service;
+package com.chat.service;
 
 import org.jivesoftware.smack.XMPPConnection;
 
